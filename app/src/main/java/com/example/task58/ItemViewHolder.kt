@@ -23,7 +23,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
             }
 
-            textView = it.findViewById(R.id.textView)
+            textView = it.findViewById(R.id.tvName)
             textViewDelete = it.findViewById(R.id.textViewDelete)
 
             textViewDelete.setOnClickListener {
