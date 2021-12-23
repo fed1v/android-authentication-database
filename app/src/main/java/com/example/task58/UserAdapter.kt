@@ -36,12 +36,6 @@ class UserAdapter : RecyclerView.Adapter<ItemViewHolder>() {
 
     override fun getItemCount(): Int = userList.size
 
-    /*fun reload(list: List<Int>) {
-        this.userList.clear()
-        this.userList.addAll(list)
-        notifyDataSetChanged()
-    }*/
-
     fun removeItem(viewHolder: RecyclerView.ViewHolder) {
         val position = viewHolder.adapterPosition
         userList.removeAt(position)

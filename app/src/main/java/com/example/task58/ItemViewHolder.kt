@@ -9,7 +9,8 @@ import java.lang.ref.WeakReference
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val view = WeakReference(itemView)
     lateinit var textView: TextView
-    lateinit var textViewDelete: TextView
+    private var textViewDelete = itemView.findViewById<TextView>(R.id.textViewDelete)
+    private var textViewBlock = itemView.findViewById<TextView>(R.id.textViewBlock)
 
     private var id = itemView.findViewById<TextView>(R.id.tvId)
     private var name = itemView.findViewById<TextView>(R.id.tvName)
@@ -32,12 +33,18 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             }
 
             textView = it.findViewById(R.id.tvName)
+
             textViewDelete = it.findViewById(R.id.textViewDelete)
 
             textViewDelete.setOnClickListener {
                 onDeleteClick?.let { onDeleteClick ->
                     onDeleteClick(this)
                 }
+            }
+
+            textViewBlock.setOnClickListener {
+                //TODO
+                println("Blocked: " + this.index)
             }
         }
     }
@@ -53,6 +60,6 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun updateView() {
         view.get()?.scrollTo(0, 0)
-        textView.text = "index $index"
+    //    textView.text = "index $index"
     }
 }
