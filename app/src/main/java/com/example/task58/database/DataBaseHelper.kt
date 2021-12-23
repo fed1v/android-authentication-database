@@ -53,7 +53,7 @@ class DataBaseHelper(context: Context) :
         return insert != -1L;
     }
 
-    fun getAllUsers(): List<User> {
+    fun getAllUsers(): ArrayList<User> {
         val resultList = ArrayList<User>()
         val query = "SELECT * FROM " + TABLE_NAME
         val db = this.readableDatabase

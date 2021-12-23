@@ -6,6 +6,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.task58.database.User
 import com.example.task58.database.DataBaseHelper
 import com.example.task58.databinding.ActivityMainBinding
@@ -21,27 +23,35 @@ class MainActivity : AppCompatActivity() {
     private lateinit var swStatus: SwitchCompat
 
     private lateinit var dataBaseHelper: DataBaseHelper
-    private var adapter = Adapter()
+    private lateinit var recyclerView: RecyclerView
+    private var adapter: UserAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         initView()
+        initRecyclerView()
         dataBaseHelper = DataBaseHelper(this)
 
-        showUsers()
+        getUsers()
 
         btnAdd.setOnClickListener {
             addUser()
-            showUsers()
+            getUsers()
         }
 
         btnViewAll.setOnClickListener {
-            showUsers()
+            getUsers()
         }
 
 
+    }
+
+    private fun initRecyclerView(){
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = UserAdapter()
+        recyclerView.adapter = adapter
     }
 
     private fun initView(){
@@ -51,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         etName = findViewById(R.id.et_name)
         etEmail = findViewById(R.id.et_email)
         swStatus = findViewById(R.id.sw_status)
+        recyclerView = findViewById(R.id.recyclerView)
     }
 
     private fun addUser(){
@@ -71,19 +82,21 @@ class MainActivity : AppCompatActivity() {
         dataBaseHelper = DataBaseHelper(this)
         val success = dataBaseHelper.insertUser(user)
         if(success){
-            Toast.makeText(this, "Student Added", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "User Added", Toast.LENGTH_SHORT).show()
+            getUsers()
         } else{
             Toast.makeText(this, "Record not saved", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun showUsers(){
+    private fun getUsers(){
         val userList = dataBaseHelper.getAllUsers()
 
-        //TODO
 
-    //    adapter = Adapter(this, android.R.layout.simple_list_item_1, dataBaseHelper.getEveryone())
-        binding.recyclerView.adapter = adapter
+        adapter?.addItems(userList)
+
+
+
     }
 
     private fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {

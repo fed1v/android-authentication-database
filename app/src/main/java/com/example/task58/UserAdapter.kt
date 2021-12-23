@@ -3,11 +3,18 @@ package com.example.task58
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.task58.database.User
 
 
-class Adapter : RecyclerView.Adapter<ItemViewHolder>() {
+class UserAdapter : RecyclerView.Adapter<ItemViewHolder>() {
+    var userList: ArrayList<User> = ArrayList()
 
-    var list = mutableListOf<Int>()
+
+    fun addItems(items: ArrayList<User>){
+        userList = items
+        notifyDataSetChanged()
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
@@ -16,26 +23,28 @@ class Adapter : RecyclerView.Adapter<ItemViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.index = list[position]
+        val user = userList[position]
+        holder.bindView(user)
 
         holder.onDeleteClick = {
             removeItem(it)
         }
 
-        holder.updateView()
+    //    holder.updateView()
     }
 
-    override fun getItemCount(): Int = list.size
 
-    fun reload(list: List<Int>) {
-        this.list.clear()
-        this.list.addAll(list)
+    override fun getItemCount(): Int = userList.size
+
+    /*fun reload(list: List<Int>) {
+        this.userList.clear()
+        this.userList.addAll(list)
         notifyDataSetChanged()
-    }
+    }*/
 
     fun removeItem(viewHolder: RecyclerView.ViewHolder) {
         val position = viewHolder.adapterPosition
-        list.removeAt(position)
+        userList.removeAt(position)
         notifyItemRemoved(position)
     }
 
