@@ -37,23 +37,23 @@ class DataBaseHelper(context: Context) :
         onCreate(db)
     }
 
-    fun addOne(user: User): Boolean {
+    fun insertUser(user: User): Boolean {
         val values = ContentValues()
-        values.put(DataBaseHelper.COL_NAME, user.name)
-        values.put(DataBaseHelper.COL_EMAIL, user.email)
-        values.put(DataBaseHelper.COL_REGISTRATION_DATE, user.registrationDate)
-        values.put(DataBaseHelper.COL_LAST_LOGIN, user.lastLogin)
-        values.put(DataBaseHelper.COL_STATUS, user.status)
+        values.put(COL_NAME, user.name)
+        values.put(COL_EMAIL, user.email)
+        values.put(COL_REGISTRATION_DATE, user.registrationDate)
+        values.put(COL_LAST_LOGIN, user.lastLogin)
+        values.put(COL_STATUS, user.status)
 
         val db = this.writableDatabase
-        val insert = db.insert(DataBaseHelper.TABLE_NAME, null, values)
+        val insert = db.insert(TABLE_NAME, null, values)
 
         db.close()
 
         return insert != -1L;
     }
 
-    fun getEveryone(): List<User> {
+    fun getAllUsers(): List<User> {
         val resultList = ArrayList<User>()
         val query = "SELECT * FROM " + TABLE_NAME
         val db = this.readableDatabase
@@ -72,8 +72,8 @@ class DataBaseHelper(context: Context) :
                     else -> true
                 }
 
-                val customerModel = User(id, name, email, registrationDate, lastLogin, status)
-                resultList.add(customerModel)
+                val user = User(id, name, email, registrationDate, lastLogin, status)
+                resultList.add(user)
 
             } while (cursor.moveToNext())
 

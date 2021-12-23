@@ -1,12 +1,7 @@
 package com.example.task58
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 
@@ -16,7 +11,7 @@ class Adapter : RecyclerView.Adapter<ItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.view_holder_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.view_holder_user, parent, false)
         )
     }
 
