@@ -2,8 +2,6 @@ package com.example.task58
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.example.task58.database.User
 import com.example.task58.database.DataBaseHelper
 import com.example.task58.databinding.ActivityMainBinding
@@ -12,8 +10,8 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    lateinit var customerArrayAdapter: ArrayAdapter<User>
     lateinit var dataBaseHelper: DataBaseHelper
+    var adapter = Adapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +49,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showCustomers(){
-        customerArrayAdapter = RecyclerView.Adapter<User>(this, android.R.layout.simple_list_item_1, dataBaseHelper.getEveryone())
-        binding.recyclerView.adapter = customerArrayAdapter
+    //    adapter = Adapter(this, android.R.layout.simple_list_item_1, dataBaseHelper.getEveryone())
+        binding.recyclerView.adapter = adapter
     }
 
     fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
