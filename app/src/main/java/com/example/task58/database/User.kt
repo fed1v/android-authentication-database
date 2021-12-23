@@ -6,5 +6,5 @@ data class User(
     val email: String,
     val registrationDate: String,
     val lastLogin: String,
-    val status: Boolean
+    var status: Boolean
 ) {}

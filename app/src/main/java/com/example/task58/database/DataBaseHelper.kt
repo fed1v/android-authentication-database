@@ -12,7 +12,7 @@ class DataBaseHelper(context: Context) :
         private val DATABASE_VERSION = 1
         private val DATABASE_NAME = "USER_DB"
         private val TABLE_NAME = "USER_TABLE"
-        private val ID_COL = "ID"
+        private val COL_ID = "ID"
         private val COL_NAME = "USER_NAME"
         private val COL_EMAIL = "USER_EMAIL"
         private val COL_REGISTRATION_DATE = "REGISTRATION_DATE"
@@ -22,7 +22,7 @@ class DataBaseHelper(context: Context) :
 
     override fun onCreate(db: SQLiteDatabase) {
         val query = ("CREATE TABLE " + TABLE_NAME +
-                "(" + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "(" + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_NAME + " TEXT, " +
                 COL_EMAIL + " INT, " +
                 COL_REGISTRATION_DATE + " TEXT, " +
@@ -85,15 +85,31 @@ class DataBaseHelper(context: Context) :
         return resultList
     }
 
-    fun deleteOne(user: User): Boolean{
+    fun deleteUserById(id: Int): Int {
         val db = this.writableDatabase
-        val query = "DELETE FROM " + TABLE_NAME + " WHERE " + ID_COL + " = " + user.id
-        val cursor = db.rawQuery(query, null)
 
-        if(cursor.moveToFirst()){
-            return true
-        }
+        val contentValues = ContentValues()
+        contentValues.put(COL_ID, id)
 
-        return false
+        val success = db.delete(TABLE_NAME, "id="+id, null)
+        db.close()
+        return success
     }
+
+    fun updateUser(user: User): Int{
+        val db = this.writableDatabase
+        val values = ContentValues()
+
+        values.put(COL_ID, user.id)
+        values.put(COL_NAME, user.name)
+        values.put(COL_EMAIL, user.email)
+        values.put(COL_REGISTRATION_DATE, user.registrationDate)
+        values.put(COL_LAST_LOGIN, user.lastLogin)
+        values.put(COL_STATUS, user.status)
+
+        val success = db.update(TABLE_NAME, values, "id="+user.id, null)
+        db.close()
+        return success
+    }
+
 }

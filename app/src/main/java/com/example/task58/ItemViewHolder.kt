@@ -9,8 +9,8 @@ import java.lang.ref.WeakReference
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val view = WeakReference(itemView)
     lateinit var textView: TextView
-    private var textViewDelete = itemView.findViewById<TextView>(R.id.textViewDelete)
-    private var textViewBlock = itemView.findViewById<TextView>(R.id.textViewBlock)
+    var textViewDelete = itemView.findViewById<TextView>(R.id.textViewDelete)
+    var textViewBlock = itemView.findViewById<TextView>(R.id.textViewBlock)
 
     private var id = itemView.findViewById<TextView>(R.id.tvId)
     private var name = itemView.findViewById<TextView>(R.id.tvName)
@@ -21,6 +21,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     var index = 0
     var onDeleteClick: ((RecyclerView.ViewHolder) -> Unit)? = null
+    var onBlockClick: ((RecyclerView.ViewHolder) -> Unit)? = null
 
     init {
         view.get()?.let {
@@ -33,18 +34,21 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             }
 
             textView = it.findViewById(R.id.tvName)
-
             textViewDelete = it.findViewById(R.id.textViewDelete)
 
             textViewDelete.setOnClickListener {
                 onDeleteClick?.let { onDeleteClick ->
                     onDeleteClick(this)
+                    updateView()
                 }
             }
 
             textViewBlock.setOnClickListener {
                 //TODO
                 println("Blocked: " + this.index)
+                updateView()
+
+                // + update data in database !
             }
         }
     }
@@ -60,6 +64,6 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun updateView() {
         view.get()?.scrollTo(0, 0)
-    //    textView.text = "index $index"
+        println("Update view")
     }
 }

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -13,11 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task58.database.User
 import com.example.task58.database.DataBaseHelper
-import com.example.task58.databinding.ActivityMainBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+    private var user: User? = null
+
     private lateinit var btnAdd: Button
     private lateinit var btnViewAll: Button
     private lateinit var etName: EditText
@@ -44,6 +46,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnViewAll.setOnClickListener {
+            getUsers()
+        }
+
+        adapter?.setOnClickDeleteItem {
+            deleteUser(it.id)
+            getUsers()
+        }
+
+        adapter?.setOnClickBlockItem {
+            updateUser(it)
             getUsers()
         }
 
@@ -87,6 +99,15 @@ class MainActivity : AppCompatActivity() {
         } else{
             Toast.makeText(this, "Record not saved", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun deleteUser(id: Int){
+        if(id == null) return
+        dataBaseHelper.deleteUserById(id)
+    }
+
+    private fun updateUser(user: User){
+        dataBaseHelper.updateUser(user)
     }
 
     private fun getUsers(){

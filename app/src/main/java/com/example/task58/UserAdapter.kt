@@ -8,13 +8,21 @@ import com.example.task58.database.User
 
 class UserAdapter : RecyclerView.Adapter<ItemViewHolder>() {
     var userList: ArrayList<User> = ArrayList()
-
+    private var onClickDeleteItem: ((User) -> Unit)? = null
+    private var onClickBlockItem: ((User) -> Unit)? = null
 
     fun addItems(items: ArrayList<User>){
         userList = items
         notifyDataSetChanged()
     }
 
+    fun setOnClickDeleteItem(callback: (User) -> Unit){
+        this.onClickDeleteItem = callback
+    }
+
+    fun setOnClickBlockItem(callback: (User) -> Unit){
+        this.onClickBlockItem = callback
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
@@ -26,11 +34,24 @@ class UserAdapter : RecyclerView.Adapter<ItemViewHolder>() {
         val user = userList[position]
         holder.bindView(user)
 
-        holder.onDeleteClick = {
-            removeItem(it)
+        holder.textViewDelete.setOnClickListener {
+            onClickDeleteItem?.invoke(user)
+            userList.removeAt(position)
+            notifyItemRemoved(position)
         }
 
-    //    holder.updateView()
+        holder.textViewBlock.setOnClickListener {
+            if(user.status == true){
+                user.status = false
+            } else {
+                user.status = true
+            }
+
+            onClickBlockItem?.invoke(user)
+            notifyItemChanged(position)
+        }
+
+        holder.updateView()
     }
 
 
