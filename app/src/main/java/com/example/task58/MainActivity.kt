@@ -6,6 +6,7 @@ import android.content.Intent
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.example.task58.database.CustomerModel
 import com.example.task58.database.DataBaseHelper
 import com.example.task58.databinding.ActivityMainBinding
@@ -22,10 +23,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         showCustomers()
-
-        binding.buttonSwitchActivity2.setOnClickListener {
-            switchActivities()
-        }
 
         binding.btnAdd.setOnClickListener {
             val age = binding.etAge.text.toString().toIntOrNull()
@@ -50,22 +47,11 @@ class MainActivity : AppCompatActivity() {
             showCustomers()
         }
 
-        binding.lvCustomerList.setOnItemClickListener {parent, view, position, id ->
-            val clickedCustomer: CustomerModel = parent.getItemAtPosition(position) as CustomerModel
-            dataBaseHelper.deleteOne(clickedCustomer)
-            showCustomers()
-        }
-
-    }
-
-    fun switchActivities() {
-        val intent = Intent(this, SecondActivity::class.java)
-        startActivity(intent)
     }
 
     fun showCustomers(){
-        customerArrayAdapter = ArrayAdapter<CustomerModel>(this, android.R.layout.simple_list_item_1, dataBaseHelper.getEveryone())
-        binding.lvCustomerList.adapter = customerArrayAdapter
+        customerArrayAdapter = RecyclerView.Adapter<CustomerModel>(this, android.R.layout.simple_list_item_1, dataBaseHelper.getEveryone())
+        binding.recyclerView.adapter = customerArrayAdapter
     }
 
 }
