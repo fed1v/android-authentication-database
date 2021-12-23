@@ -1,91 +1,209 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="150dp"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools">-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/frameLayoutConstraint"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="150dp"-->
+<!--        android:orientation="vertical"-->
+<!--        android:padding="16dp"-->
+<!--        >-->
+
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvName"-->
+<!--            android:textSize="16sp"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            tools:text="Name"-->
+<!--            />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvId"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            tools:text="Id"-->
+
+<!--            />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvEmail"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            tools:text="Email"-->
+<!--            />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvRegDate"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            tools:text="RegDate"-->
+<!--            />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvLastLogin"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            tools:text="Last Login"-->
+<!--            />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvStatus"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            tools:text="Status"-->
+<!--            />-->
+
+
+<!--    </LinearLayout>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/frameLayoutConstraint"-->
+<!--        android:text="delete"-->
+<!--        android:textSize="12pt"-->
+<!--        android:textColor="#fff"-->
+<!--        android:id="@+id/textViewDelete"-->
+<!--        android:background="#f00"/>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/textViewDelete"-->
+<!--        android:text="block"-->
+<!--        android:textSize="12pt"-->
+<!--        android:textColor="#fff"-->
+<!--        android:id="@+id/textViewBlock"-->
+<!--        android:background="#f00"/>-->
+
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0.8dp"-->
+<!--        android:background="#ddd"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"/>-->
+
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="150dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:background="@color/white"
+    android:backgroundTint="@color/white"
+    >
 
-    <LinearLayout
-        android:id="@+id/frameLayoutConstraint"
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:orientation="vertical"
-        android:padding="16dp"
-        >
+        android:layout_height="130dp"
+        android:padding="10dp">
 
-
-        <TextView
-            android:id="@+id/tvId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Id"
-
-            />
 
         <TextView
             android:id="@+id/tvName"
-            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Name"
-            />
-
-        <TextView
-            android:id="@+id/tvEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Email"
-            />
-
-        <TextView
-            android:id="@+id/tvRegDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="RegDate"
-            />
-
-        <TextView
-            android:id="@+id/tvLastLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Last Login"
-            />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/tvStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Status"
-            />
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:text="Status"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tvId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvName"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:text="id"
+            android:textSize="15sp" />
 
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/tvLastLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvId"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:text="last login"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvLastLogin"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:text="Email"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tvRegDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvLastLogin"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/tvEmail"
+            android:text="Registration Date"
+            android:textSize="15sp" />
+
+
+    </RelativeLayout>
 
     <TextView
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toEndOf="@+id/frameLayoutConstraint"
-        android:text="delete"
-        android:textSize="12pt"
-        android:textColor="#fff"
-        android:id="@+id/textViewDelete"
-        android:background="#f00"/>
-
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewDelete"
-        android:text="block"
-        android:textSize="12pt"
-        android:textColor="#fff"
         android:id="@+id/textViewBlock"
-        android:background="#f00"/>
+        android:layout_width="100dp"
+        android:layout_height="130dp"
+        android:background="#FD6723"
+        android:text="BLOCK"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="12pt"
+        app:layout_constraintStart_toEndOf="@+id/textViewDelete" />
+
+    <TextView
+        android:id="@+id/textViewDelete"
+        android:layout_width="100dp"
+        android:layout_height="130dp"
+        android:background="#f00"
+        android:gravity="center"
+        android:text="DELETE"
+        android:textColor="#fff"
+        android:textSize="12pt"
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.8dp"
         android:background="#ddd"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
