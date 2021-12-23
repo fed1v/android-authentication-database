@@ -2,18 +2,17 @@ package com.example.task58
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.content.Intent
-import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.task58.database.CustomerModel
+import com.example.task58.database.User
 import com.example.task58.database.DataBaseHelper
 import com.example.task58.databinding.ActivityMainBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    lateinit var customerArrayAdapter: ArrayAdapter<CustomerModel>
+    lateinit var customerArrayAdapter: ArrayAdapter<User>
     lateinit var dataBaseHelper: DataBaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,20 +24,22 @@ class MainActivity : AppCompatActivity() {
         showCustomers()
 
         binding.btnAdd.setOnClickListener {
-            val age = binding.etAge.text.toString().toIntOrNull()
             val name = binding.etName.text.toString()
-            val isChecked = binding.swActive.isChecked
+            val email = binding.etEmail.text.toString()
+            val registrationDate = getCurrentDateTime().toString("yyyy/MM/dd HH:mm:ss")
+            val lastLogin = getCurrentDateTime().toString("yyyy/MM/dd HH:mm:ss")
+            val status = binding.swStatus.isChecked
 
-            val customerModel: CustomerModel
+            val user: User
 
-            if (age == null || name == "") {
-                customerModel = CustomerModel(-1, "error", 0, false)
+            if (name == "" || email == "") {
+                user = User(-1, "error", "error@error.error", "errorReg", "errorLog", false)
             } else{
-                customerModel = CustomerModel(-1, name, age, isChecked)
+                user = User(-1, name, email, registrationDate, lastLogin, status)
             }
 
             dataBaseHelper = DataBaseHelper(this)
-            dataBaseHelper.addOne(customerModel)
+            dataBaseHelper.addOne(user)
 
             showCustomers()
         }
@@ -50,8 +51,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showCustomers(){
-        customerArrayAdapter = RecyclerView.Adapter<CustomerModel>(this, android.R.layout.simple_list_item_1, dataBaseHelper.getEveryone())
+        customerArrayAdapter = RecyclerView.Adapter<User>(this, android.R.layout.simple_list_item_1, dataBaseHelper.getEveryone())
         binding.recyclerView.adapter = customerArrayAdapter
     }
 
+    fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
+        val formatter = SimpleDateFormat(format, locale)
+        return formatter.format(this)
+    }
+
+    fun getCurrentDateTime(): Date {
+        return Calendar.getInstance().time
+    }
 }

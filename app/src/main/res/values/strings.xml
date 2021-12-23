@@ -9,7 +9,7 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="CustomerName">Customer Name</string>
-    <string name="CustomerAge">Age</string>
-    <string name="ActiveCustomer">Active Customer</string>
+    <string name="UserName">User Name</string>
+    <string name="UserEmail">Email</string>
+    <string name="UserStatus">Status</string>
 </resources>

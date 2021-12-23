@@ -10,19 +10,24 @@ class DataBaseHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     companion object {
         private val DATABASE_VERSION = 1
-        private val DATABASE_NAME = "MY_TEST_DATABASE"
-        private val TABLE_NAME = "CUSTOMER_TABLE"
-        private val NAME_COL = "CUSTOMER_NAME"
-        private val AGE_COL = "CUSTOMER_AGE"
-        private val ACTIVE_CUSTOMER_COL = "ACTIVE_CUSTOMER  "
-        private val ID_COL = "id"
+        private val DATABASE_NAME = "USER_DATABASE"
+        private val TABLE_NAME = "USER_TABLE"
+        private val ID_COL = "ID"
+        private val COL_NAME = "USER_NAME"
+        private val COL_EMAIL = "USER_EMAIL"
+        private val COL_REGISTRATION_DATE = "REGISTRATION_DATE"
+        private val COL_LAST_LOGIN = "LAST_LOGIN"
+        private val COL_STATUS = "STATUS"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
         val query = ("CREATE TABLE " + TABLE_NAME +
                 "(" + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                NAME_COL + " TEXT, " +
-                AGE_COL + " INT, " + ACTIVE_CUSTOMER_COL + " BOOL" + ")")
+                COL_NAME + " TEXT, " +
+                COL_EMAIL + " INT, " +
+                COL_REGISTRATION_DATE + " TEXT, " +
+                COL_LAST_LOGIN + " TEXT, " +
+                COL_STATUS + " BOOL" + ")")
 
         db.execSQL(query)
     }
@@ -32,23 +37,24 @@ class DataBaseHelper(context: Context) :
         onCreate(db)
     }
 
-    fun addOne(customerModel: CustomerModel): Boolean {
+    fun addOne(user: User): Boolean {
         val values = ContentValues()
-        values.put(DataBaseHelper.NAME_COL, customerModel.name)
-        values.put(DataBaseHelper.AGE_COL, customerModel.age)
-        values.put(DataBaseHelper.ACTIVE_CUSTOMER_COL, customerModel.isActive)
+        values.put(DataBaseHelper.COL_NAME, user.name)
+        values.put(DataBaseHelper.COL_EMAIL, user.email)
+        values.put(DataBaseHelper.COL_REGISTRATION_DATE, user.registrationDate)
+        values.put(DataBaseHelper.COL_LAST_LOGIN, user.lastLogin)
+        values.put(DataBaseHelper.COL_STATUS, user.status)
 
         val db = this.writableDatabase
         val insert = db.insert(DataBaseHelper.TABLE_NAME, null, values)
 
         db.close()
 
-        if (insert == -1L) return false
-        return true;
+        return insert != -1L;
     }
 
-    fun getEveryone(): List<CustomerModel> {
-        val resultList = ArrayList<CustomerModel>()
+    fun getEveryone(): List<User> {
+        val resultList = ArrayList<User>()
         val query = "SELECT * FROM " + TABLE_NAME
         val db = this.readableDatabase
 
@@ -58,18 +64,19 @@ class DataBaseHelper(context: Context) :
             do {
                 val id = cursor.getInt(0)
                 val name = cursor.getString(1)
-                val age = cursor.getInt(2)
-                val isActive = when (cursor.getInt(3)) {
+                val email = cursor.getString(2)
+                val registrationDate = cursor.getString(3)
+                val lastLogin = cursor.getString(4)
+                val status = when (cursor.getInt(5)) {
                     0 -> false
                     else -> true
                 }
 
-                val customerModel = CustomerModel(id, name, age, isActive)
+                val customerModel = User(id, name, email, registrationDate, lastLogin, status)
                 resultList.add(customerModel)
 
             } while (cursor.moveToNext())
 
-        } else {
         }
 
         cursor.close()
@@ -78,9 +85,9 @@ class DataBaseHelper(context: Context) :
         return resultList
     }
 
-    fun deleteOne(customerModel: CustomerModel): Boolean{
+    fun deleteOne(user: User): Boolean{
         val db = this.writableDatabase
-        val query = "DELETE FROM " + TABLE_NAME + " WHERE " + ID_COL + " = " + customerModel.id
+        val query = "DELETE FROM " + TABLE_NAME + " WHERE " + ID_COL + " = " + user.id
         val cursor = db.rawQuery(query, null)
 
         if(cursor.moveToFirst()){

@@ -14,34 +14,34 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:hint="@string/CustomerName"
+        android:hint="@string/UserName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/et_age"
+        android:id="@+id/et_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="@string/CustomerAge"
-        android:inputType="number"
+        android:hint="@string/UserEmail"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_name" />
 
     <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/sw_active"
+        android:id="@+id/sw_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ActiveCustomer"
+        android:text="@string/UserStatus"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_age" />
+        app:layout_constraintTop_toBottomOf="@+id/et_email" />
 
     <Button
         android:id="@+id/btn_viewAll"
@@ -50,7 +50,7 @@
         android:layout_marginTop="8dp"
         android:text="View All"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sw_active" />
+        app:layout_constraintTop_toBottomOf="@+id/sw_status" />
 
     <Button
         android:id="@+id/btn_add"
