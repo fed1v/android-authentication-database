@@ -33,23 +33,6 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
             }
 
-            textView = it.findViewById(R.id.tvName)
-            textViewDelete = it.findViewById(R.id.textViewDelete)
-
-            textViewDelete.setOnClickListener {
-                onDeleteClick?.let { onDeleteClick ->
-                    onDeleteClick(this)
-                    updateView()
-                }
-            }
-
-            textViewBlock.setOnClickListener {
-                //TODO
-                println("Blocked: " + this.index)
-                updateView()
-
-                // + update data in database !
-            }
         }
     }
 
@@ -64,6 +47,5 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun updateView() {
         view.get()?.scrollTo(0, 0)
-        println("Update view")
     }
 }

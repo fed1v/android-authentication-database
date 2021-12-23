@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task58.database.User
 
-
 class UserAdapter : RecyclerView.Adapter<ItemViewHolder>() {
     var userList: ArrayList<User> = ArrayList()
     private var onClickDeleteItem: ((User) -> Unit)? = null
@@ -36,7 +35,6 @@ class UserAdapter : RecyclerView.Adapter<ItemViewHolder>() {
 
         holder.textViewDelete.setOnClickListener {
             onClickDeleteItem?.invoke(user)
-            userList.removeAt(position)
             notifyItemRemoved(position)
         }
 
@@ -53,7 +51,6 @@ class UserAdapter : RecyclerView.Adapter<ItemViewHolder>() {
 
         holder.updateView()
     }
-
 
     override fun getItemCount(): Int = userList.size
 
