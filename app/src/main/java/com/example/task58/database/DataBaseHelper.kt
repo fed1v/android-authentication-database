@@ -10,7 +10,7 @@ class DataBaseHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     companion object {
         private val DATABASE_VERSION = 1
-        private val DATABASE_NAME = "USER_DATABASE"
+        private val DATABASE_NAME = "USER_DB"
         private val TABLE_NAME = "USER_TABLE"
         private val ID_COL = "ID"
         private val COL_NAME = "USER_NAME"

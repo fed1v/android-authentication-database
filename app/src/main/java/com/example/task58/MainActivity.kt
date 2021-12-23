@@ -15,7 +15,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
     private lateinit var btnAdd: Button
     private lateinit var btnViewAll: Button
     private lateinit var etName: EditText
@@ -55,7 +54,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView(){
-        binding = ActivityMainBinding.inflate(layoutInflater)
         btnAdd = findViewById(R.id.btn_add)
         btnViewAll = findViewById(R.id.btn_viewAll)
         etName = findViewById(R.id.et_name)
@@ -83,7 +81,6 @@ class MainActivity : AppCompatActivity() {
         val success = dataBaseHelper.insertUser(user)
         if(success){
             Toast.makeText(this, "User Added", Toast.LENGTH_SHORT).show()
-            getUsers()
         } else{
             Toast.makeText(this, "Record not saved", Toast.LENGTH_SHORT).show()
         }
@@ -91,12 +88,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getUsers(){
         val userList = dataBaseHelper.getAllUsers()
-
-
         adapter?.addItems(userList)
-
-
-
     }
 
     private fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
