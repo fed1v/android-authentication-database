@@ -97,14 +97,10 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
-    android:background="@color/white"
-    android:backgroundTint="@color/white"
     >
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:background="@color/white"
-        android:backgroundTint="@color/white"
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:padding="10dp">
@@ -180,19 +176,20 @@
     <TextView
         android:id="@+id/textViewBlock"
         android:layout_width="100dp"
-        android:layout_height="130dp"
-        android:background="#FD6723"
+        android:layout_height="65dp"
+        android:background="#FF5722"
         android:text="BLOCK"
         android:gravity="center"
         android:textColor="#fff"
         android:textSize="12pt"
-        app:layout_constraintStart_toEndOf="@+id/textViewDelete" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewDelete"
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout" />
 
     <TextView
         android:id="@+id/textViewDelete"
         android:layout_width="100dp"
-        android:layout_height="130dp"
-        android:background="#f00"
+        android:layout_height="65dp"
+        android:background="#C21826"
         android:gravity="center"
         android:text="DELETE"
         android:textColor="#fff"
@@ -202,7 +199,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.8dp"
-        android:background="#ddd"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 

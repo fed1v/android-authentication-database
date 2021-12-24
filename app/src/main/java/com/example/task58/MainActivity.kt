@@ -127,7 +127,7 @@ class MainActivity : AppCompatActivity() {
     fun setItemTouchHelper() {
         ItemTouchHelper(object : ItemTouchHelper.Callback() {
 
-            private val limitScrollX = dipToPx(200f, this@MainActivity)
+            private val limitScrollX = dipToPx(100f, this@MainActivity)
             var currentScrollX = 0
             var currentScrollXWhenInActive = 0
             var initXWhenInActive = 0f
