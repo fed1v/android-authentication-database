@@ -1,12 +1,12 @@
 package com.example.task58.Models
 
 data class User(
-    val id: String,
-    val name: String,
-    val email: String,
-    val registrationDate: String,
-    val lastLogin: String,
-    var status: Boolean,
-    var password: String
+    val id: String? = null,
+    val name: String? = null,
+    val email: String? = null,
+    val registrationDate: String? = null,
+    val lastLogin: String? = null,
+    var status: Boolean = false,
+    var password: String? = null
 ) {
 }

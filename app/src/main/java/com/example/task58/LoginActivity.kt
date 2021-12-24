@@ -23,10 +23,11 @@ import java.util.*
 class LoginActivity : AppCompatActivity() {
     lateinit var btnSignIn: Button
     lateinit var btnRegister: Button
+    lateinit var root: RelativeLayout
+
     lateinit var auth: FirebaseAuth
     lateinit var db: FirebaseDatabase
     lateinit var users: DatabaseReference
-    lateinit var root: RelativeLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,7 +129,7 @@ class LoginActivity : AppCompatActivity() {
             email.text.toString(),
             password.text.toString()
         ).addOnSuccessListener {
-            val registrationDate = getCurrentDateTime().toString("yyyy/MM/dd")
+            val registrationDate = getCurrentDateTime().toString("yyyy/MM/dd HH:mm:ss")
             val lastLogin = getCurrentDateTime().toString("yyyy/MM/dd HH:mm:ss")
             val user: User = User(
                 auth.currentUser!!.uid,
@@ -162,15 +163,19 @@ class LoginActivity : AppCompatActivity() {
         password: MaterialEditText
     ) {
         var pass = password.text.toString()
-        if(pass.length in 1..5){
+        if (pass.length in 1..5) {
             pass += "00000"
         }
+
+        // need to add block TODO
+
         auth.signInWithEmailAndPassword(email.text.toString(), pass)
             .addOnSuccessListener {
                 Snackbar.make(root, "Successful", Snackbar.LENGTH_SHORT).show()
                 switchActivity()
             }.addOnFailureListener {
-                Snackbar.make(root, "Authorisation error. " + it.message, Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(root, "Authorisation error. " + it.message, Snackbar.LENGTH_SHORT)
+                    .show()
             }
     }
 
