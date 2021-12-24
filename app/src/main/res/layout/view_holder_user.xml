@@ -97,13 +97,16 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
+    android:paddingBottom="3dp"
     >
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:padding="10dp">
+        android:layout_height="144dp"
+        android:padding="10dp"
+        android:layout_marginBottom="5dp"
+        >
 
 
         <TextView
@@ -117,27 +120,26 @@
             android:textColor="@color/black"
             android:textSize="25sp" />
 
+
         <TextView
             android:id="@+id/tvStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/tvRegDate"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
             android:text="Status"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tvId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvName"
-            android:layout_alignParentStart="true"
             android:layout_marginTop="5dp"
             android:text="id"
-            android:textSize="15sp" />
-
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tvLastLogin"
@@ -146,29 +148,29 @@
             android:layout_below="@+id/tvId"
             android:layout_alignParentStart="true"
             android:layout_marginTop="5dp"
-            android:text="last login"
-            android:textSize="15sp" />
+            android:text="Last login"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tvEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvLastLogin"
+            android:layout_below="@+id/tvName"
             android:layout_alignParentStart="true"
+            android:layout_marginStart="150dp"
             android:layout_marginTop="5dp"
             android:text="Email"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tvRegDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvLastLogin"
-            android:layout_marginLeft="15dp"
+            android:layout_alignParentStart="true"
             android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/tvEmail"
             android:text="Registration Date"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
 
 
     </RelativeLayout>
@@ -176,7 +178,7 @@
     <TextView
         android:id="@+id/textViewBlock"
         android:layout_width="100dp"
-        android:layout_height="65dp"
+        android:layout_height="72dp"
         android:background="#FF5722"
         android:text="BLOCK"
         android:gravity="center"
@@ -188,12 +190,13 @@
     <TextView
         android:id="@+id/textViewDelete"
         android:layout_width="100dp"
-        android:layout_height="65dp"
+        android:layout_height="72dp"
         android:background="#C21826"
         android:gravity="center"
         android:text="DELETE"
         android:textColor="#fff"
         android:textSize="12pt"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
         app:layout_constraintStart_toEndOf="@+id/constraintLayout" />
 
     <View

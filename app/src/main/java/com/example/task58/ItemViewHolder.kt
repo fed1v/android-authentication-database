@@ -1,6 +1,7 @@
 package com.example.task58
 
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task58.database.User
@@ -37,12 +38,15 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     fun bindView(user: User){
-        id.text = user.id.toString()
+        id.text = "id: " + user.id.toString()
         name.text = user.name
         email.text = user.email
-        registrationDate.text = user.registrationDate
-        lastLogin.text = user.lastLogin
-        status.text = user.status.toString()
+        registrationDate.text = "Registration date: " + user.registrationDate
+        lastLogin.text = "Last login: " + user.lastLogin
+        status.text = when(user.status){
+            true -> "Blocked"
+            else -> "Not Blocked"
+        }
     }
 
     fun updateView() {
