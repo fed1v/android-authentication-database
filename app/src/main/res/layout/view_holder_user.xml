@@ -89,7 +89,7 @@
     <TextView
         android:id="@+id/textViewBlock"
         android:layout_width="100dp"
-        android:layout_height="72dp"
+        android:layout_height="87dp"
         android:background="#FF5722"
         android:text="BLOCK"
         android:gravity="center"
@@ -101,7 +101,7 @@
     <TextView
         android:id="@+id/textViewDelete"
         android:layout_width="100dp"
-        android:layout_height="72dp"
+        android:layout_height="87dp"
         android:background="#C21826"
         android:gravity="center"
         android:text="DELETE"
