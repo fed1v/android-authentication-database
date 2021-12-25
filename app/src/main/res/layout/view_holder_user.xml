@@ -90,7 +90,7 @@
         android:id="@+id/textViewBlock"
         android:layout_width="100dp"
         android:layout_height="87dp"
-        android:background="#FF5722"
+        android:background="#FF7043"
         android:text="BLOCK"
         android:gravity="center"
         android:textColor="#fff"

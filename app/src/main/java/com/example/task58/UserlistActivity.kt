@@ -4,10 +4,13 @@ import android.content.Context
 import android.graphics.Canvas
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task58.Models.User
+import com.example.task58.databinding.ActivityUserlistBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class UserlistActivity : AppCompatActivity() {
@@ -15,47 +18,61 @@ class UserlistActivity : AppCompatActivity() {
     private lateinit var userRecyclerView: RecyclerView
     private lateinit var userArrayList: ArrayList<User>
     private var adapter: UserFirebaseAdapter? = null
-
+    private lateinit var binding: ActivityUserlistBinding
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_userlist)
-
+        
         initView()
-        initRecyclerView()
-
-        userArrayList = arrayListOf<User>()
-
-
+        initData()
 
         getUserData()
 
-        adapter!!.setOnClickDeleteItem {
-            println("Delete...(In UserlistActivity)")
+        adapter?.setOnClickDeleteItem {
+            deleteUser(it.id!!)
             getUserData()
         }
 
-        adapter!!.setOnClickBlockItem {
+        adapter?.setOnClickBlockItem {
             println("Block...(In UserlistActivity)")
+            updateUserStatus()
             getUserData()
         }
 
         setItemTouchHelper()
     }
 
-    private fun initRecyclerView(){
-        userRecyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = UserFirebaseAdapter()
-        userRecyclerView.adapter = adapter
+    private fun updateUserStatus() {
+        //TODO
+
+        println("Update User Status")
+    }
+
+    private fun deleteUser(id: String) {
+        db.child(id).removeValue().addOnSuccessListener {
+            Toast.makeText(this, "User deleted", Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener {
+            Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun initData(){
+        auth = FirebaseAuth.getInstance()
+        userArrayList = arrayListOf<User>()
+        db = FirebaseDatabase.getInstance().getReference("Users")
     }
 
     private fun initView(){
         userRecyclerView = findViewById(R.id.userList)
         userRecyclerView.setHasFixedSize(true)
+        userRecyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = UserFirebaseAdapter()
+        userRecyclerView.adapter = adapter
     }
 
     private fun getUserData() {
-        db = FirebaseDatabase.getInstance().getReference("Users")
         db.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
@@ -66,14 +83,11 @@ class UserlistActivity : AppCompatActivity() {
                     }
 
                     adapter?.addItems((userArrayList))
-                //    userRecyclerView.adapter = adapter
                 }
 
             }
 
-            override fun onCancelled(error: DatabaseError) {
-
-            }
+            override fun onCancelled(error: DatabaseError) {}
         })
     }
 
