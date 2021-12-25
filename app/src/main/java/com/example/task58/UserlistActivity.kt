@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task58.Models.User
-import com.example.task58.databinding.ActivityUserlistBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
@@ -20,7 +19,6 @@ class UserlistActivity : AppCompatActivity() {
     private lateinit var userArrayList: ArrayList<User>
     private var adapter: UserFirebaseAdapter? = null
     private lateinit var auth: FirebaseAuth
-    private var currentUser: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,11 +47,6 @@ class UserlistActivity : AppCompatActivity() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
-    }
-
-
-    private fun setCurrentUser(user: User) {
-        currentUser = user
     }
 
     private fun updateUserStatus(id: String) {

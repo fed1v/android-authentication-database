@@ -10,16 +10,13 @@ import android.widget.Button
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AlertDialog
 import com.example.task58.Models.User
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.rengwuxian.materialedittext.MaterialEditText
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.properties.Delegates
 
 class LoginActivity : AppCompatActivity() {
     lateinit var btnSignIn: Button

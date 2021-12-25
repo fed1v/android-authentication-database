@@ -27,14 +27,11 @@ class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     init {
         view.get()?.let {
-
             it.setOnClickListener {
                 if (view.get()?.scrollX != 0) {
                     view.get()?.scrollTo(0, 0)
                 }
-
             }
-
         }
     }
 
@@ -56,7 +53,6 @@ class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             textViewBlock.visibility = View.VISIBLE
             textViewUnblock.visibility = View.GONE
         }
-
     }
 
     fun updateView() {

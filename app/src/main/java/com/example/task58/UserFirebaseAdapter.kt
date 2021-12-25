@@ -39,23 +39,11 @@ class UserFirebaseAdapter : RecyclerView.Adapter<UserViewHolder>() {
         }
 
         holder.textViewBlock.setOnClickListener {
-            if(user.status == true){
-                user.status = false
-            } else {
-                user.status = true        ///// ??????
-            }
-
             onClickBlockItem?.invoke(user)
             notifyItemChanged(position)
         }
 
         holder.textViewUnblock.setOnClickListener {
-            if(user.status == true){
-                user.status = false
-            } else {
-                user.status = true        ///// ??????
-            }
-
             onClickBlockItem?.invoke(user)
             notifyItemChanged(position)
         }
@@ -64,11 +52,4 @@ class UserFirebaseAdapter : RecyclerView.Adapter<UserViewHolder>() {
     }
 
     override fun getItemCount(): Int = userList.size
-
-    fun removeItem(viewHolder: RecyclerView.ViewHolder) {
-        val position = viewHolder.adapterPosition
-        userList.removeAt(position)
-        notifyItemRemoved(position)
-    }
-
 }
