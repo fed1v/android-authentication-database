@@ -29,6 +29,10 @@ class LoginActivity : AppCompatActivity() {
     lateinit var db: FirebaseDatabase
     lateinit var users: DatabaseReference
 
+    companion object{
+        lateinit var currentUserId: String
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login2)
@@ -172,6 +176,8 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email.text.toString(), pass)
             .addOnSuccessListener {
                 Snackbar.make(root, "Successful", Snackbar.LENGTH_SHORT).show()
+                println("Current user: ${auth.currentUser!!.uid}")
+                currentUserId = auth.currentUser!!.uid
                 switchActivity()
             }.addOnFailureListener {
                 Snackbar.make(root, "Authorisation error. " + it.message, Snackbar.LENGTH_SHORT)

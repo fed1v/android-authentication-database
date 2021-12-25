@@ -1,6 +1,7 @@
 package com.example.task58
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Canvas
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,8 +19,8 @@ class UserlistActivity : AppCompatActivity() {
     private lateinit var userRecyclerView: RecyclerView
     private lateinit var userArrayList: ArrayList<User>
     private var adapter: UserFirebaseAdapter? = null
-    private lateinit var binding: ActivityUserlistBinding
     private lateinit var auth: FirebaseAuth
+    private var currentUser: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +44,18 @@ class UserlistActivity : AppCompatActivity() {
         setItemTouchHelper()
     }
 
+
+    private fun logOut() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+
+    private fun setCurrentUser(user: User) {
+        currentUser = user
+    }
+
     private fun updateUserStatus(id: String) {
         db.child(id).get().addOnSuccessListener {
             val uid = it.child("id").value.toString()
@@ -52,28 +65,29 @@ class UserlistActivity : AppCompatActivity() {
             val lastLogin = it.child("lastLogin").value.toString()
             val password = it.child("password").value.toString()
             val status = it.child("status").value.toString()
+
             val newStatus = when (status) {
                 "false" -> true
                 else -> false
             }
-            var newUser = mapOf(
-                "name" to name,
-                "email" to email,
-                "registrationDate" to registrationDate,
-                "lastLogin" to lastLogin,
+
+            val newUser = mapOf(
                 "status" to newStatus,
-                "password" to password
             )
 
-            db.child(uid).updateChildren(newUser).addOnSuccessListener {
+            db.child(id).updateChildren(newUser).addOnSuccessListener {
                 if (newStatus) {
-                    Toast.makeText(this, "User blocked", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "User blocked", Toast.LENGTH_SHORT).show()
+                    if(id == LoginActivity.currentUserId){
+                        println("Logout in block")
+                        logOut()
+                    }
                 } else {
-                    Toast.makeText(this, "User unblocked", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "User unblocked", Toast.LENGTH_SHORT).show()
                 }
 
             }.addOnFailureListener {
-                Toast.makeText(this, "Fail", Toast.LENGTH_SHORT)
+                Toast.makeText(this, "Fail", Toast.LENGTH_SHORT).show()
                 return@addOnFailureListener
             }
         }
@@ -82,6 +96,10 @@ class UserlistActivity : AppCompatActivity() {
     private fun deleteUser(id: String) {
         db.child(id).removeValue().addOnSuccessListener {
             Toast.makeText(this, "User deleted", Toast.LENGTH_SHORT).show()
+            if(id == LoginActivity.currentUserId){
+                println("Logout in delete")
+                logOut()
+            }
         }.addOnFailureListener {
             Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
         }
