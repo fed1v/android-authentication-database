@@ -3,9 +3,9 @@ package com.example.task58
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.task58.database.User
+import com.example.task58.Models.User
 
-class UserAdapter : RecyclerView.Adapter<ItemViewHolder>() {
+class UserFirebaseAdapter : RecyclerView.Adapter<UserViewHolder>() {
     var userList: ArrayList<User> = ArrayList()
     private var onClickDeleteItem: ((User) -> Unit)? = null
     private var onClickBlockItem: ((User) -> Unit)? = null
@@ -23,13 +23,13 @@ class UserAdapter : RecyclerView.Adapter<ItemViewHolder>() {
         this.onClickBlockItem = callback
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
+        return UserViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.view_holder_user, parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user = userList[position]
         holder.bindView(user)
 
@@ -39,12 +39,11 @@ class UserAdapter : RecyclerView.Adapter<ItemViewHolder>() {
         }
 
         holder.textViewBlock.setOnClickListener {
-            if(user.status == true){
-                user.status = false
-            } else {
-                user.status = true
-            }
+            onClickBlockItem?.invoke(user)
+            notifyItemChanged(position)
+        }
 
+        holder.textViewUnblock.setOnClickListener {
             onClickBlockItem?.invoke(user)
             notifyItemChanged(position)
         }
@@ -53,11 +52,4 @@ class UserAdapter : RecyclerView.Adapter<ItemViewHolder>() {
     }
 
     override fun getItemCount(): Int = userList.size
-
-    fun removeItem(viewHolder: RecyclerView.ViewHolder) {
-        val position = viewHolder.adapterPosition
-        userList.removeAt(position)
-        notifyItemRemoved(position)
-    }
-
 }

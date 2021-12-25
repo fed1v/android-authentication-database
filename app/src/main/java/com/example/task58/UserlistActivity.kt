@@ -1,133 +1,127 @@
 package com.example.task58
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Canvas
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.SwitchCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.task58.database.User
-import com.example.task58.database.DataBaseHelper
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.task58.Models.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
-class MainActivity : AppCompatActivity() {
-    private var user: User? = null
-
-    private lateinit var btnAdd: Button
-    private lateinit var btnViewAll: Button
-    private lateinit var etName: EditText
-    private lateinit var etEmail: EditText
-    private lateinit var swStatus: SwitchCompat
-
-    private lateinit var dataBaseHelper: DataBaseHelper
-    private lateinit var recyclerView: RecyclerView
-    private var adapter: UserAdapter? = null
+class UserlistActivity : AppCompatActivity() {
+    private lateinit var db: DatabaseReference
+    private lateinit var userRecyclerView: RecyclerView
+    private lateinit var userArrayList: ArrayList<User>
+    private var adapter: UserFirebaseAdapter? = null
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_userlist)
 
         initView()
-        initRecyclerView()
-        dataBaseHelper = DataBaseHelper(this)
+        initData()
 
-        getUsers()
-
-        btnAdd.setOnClickListener {
-            addUser()
-            getUsers()
-        }
-
-        btnViewAll.setOnClickListener {
-            getUsers()
-        }
+        getUserData()
 
         adapter?.setOnClickDeleteItem {
-            deleteUser(it.id)
-            getUsers()
+            deleteUser(it.id!!)
+            getUserData()
         }
 
         adapter?.setOnClickBlockItem {
-            updateUser(it)
-            getUsers()
+            updateUserStatus(it.id!!)
+            getUserData()
         }
 
         setItemTouchHelper()
     }
 
-    private fun initRecyclerView(){
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = UserAdapter()
-        recyclerView.adapter = adapter
+    private fun logOut() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
-    private fun initView(){
-        btnAdd = findViewById(R.id.btn_add)
-        btnViewAll = findViewById(R.id.btn_viewAll)
-        etName = findViewById(R.id.et_name)
-        etEmail = findViewById(R.id.et_email)
-        swStatus = findViewById(R.id.sw_status)
-        recyclerView = findViewById(R.id.recyclerView)
-    }
+    private fun updateUserStatus(id: String) {
+        db.child(id).get().addOnSuccessListener {
+            val status = it.child("status").value.toString()
 
-    private fun addUser(){
-        val name = etName.text.toString()
-        val email = etEmail.text.toString()
-        val registrationDate = getCurrentDateTime().toString("yyyy/MM/dd HH:mm:ss")
-        val lastLogin = getCurrentDateTime().toString("yyyy/MM/dd HH:mm:ss")
-        val status = swStatus.isChecked
+            val newStatus = when (status) {
+                "false" -> true
+                else -> false
+            }
 
-        val user: User
+            val newUser = mapOf(
+                "status" to newStatus,
+            )
 
-        if (name == "" || email == "") {
-            user = User(-1, "error", "error@error.error", "errorReg", "errorLog", false)
-        } else{
-            user = User(-1, name, email, registrationDate, lastLogin, status)
-        }
-
-        dataBaseHelper = DataBaseHelper(this)
-        val success = dataBaseHelper.insertUser(user)
-        if(success){
-            Toast.makeText(this, "User Added", Toast.LENGTH_SHORT).show()
-        } else{
-            Toast.makeText(this, "Record not saved", Toast.LENGTH_SHORT).show()
+            db.child(id).updateChildren(newUser).addOnSuccessListener {
+                if (newStatus) {
+                    Toast.makeText(this, "User blocked", Toast.LENGTH_SHORT).show()
+                    if (id == LoginActivity.currentUserId) {
+                        logOut()
+                    }
+                } else {
+                    Toast.makeText(this, "User unblocked", Toast.LENGTH_SHORT).show()
+                }
+            }.addOnFailureListener {
+                Toast.makeText(this, "Fail", Toast.LENGTH_SHORT).show()
+                return@addOnFailureListener
+            }
         }
     }
 
-    private fun deleteUser(id: Int){
-        if(id == null) return
-        dataBaseHelper.deleteUserById(id)
+    private fun deleteUser(id: String) {
+        db.child(id).removeValue().addOnSuccessListener {
+            Toast.makeText(this, "User deleted", Toast.LENGTH_SHORT).show()
+            if (id == LoginActivity.currentUserId) {
+                logOut()
+            }
+        }.addOnFailureListener {
+            Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    private fun updateUser(user: User){
-        dataBaseHelper.updateUser(user)
+    private fun initData() {
+        auth = FirebaseAuth.getInstance()
+        userArrayList = arrayListOf<User>()
+        db = FirebaseDatabase.getInstance().getReference("Users")
     }
 
-    private fun getUsers(){
-        val userList = dataBaseHelper.getAllUsers()
-        adapter?.addItems(userList)
+    private fun initView() {
+        userRecyclerView = findViewById(R.id.userList)
+        userRecyclerView.setHasFixedSize(true)
+        userRecyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = UserFirebaseAdapter()
+        userRecyclerView.adapter = adapter
     }
 
-    private fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
-        val formatter = SimpleDateFormat(format, locale)
-        return formatter.format(this)
-    }
-
-    private fun getCurrentDateTime(): Date {
-        return Calendar.getInstance().time
+    private fun getUserData() {
+        db.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    userArrayList.removeAll { true }
+                    for (userSnapshot in snapshot.children) {
+                        val user = userSnapshot.getValue(User::class.java)
+                        userArrayList.add(user!!)
+                    }
+                    adapter?.addItems((userArrayList))
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
     }
 
     fun setItemTouchHelper() {
         ItemTouchHelper(object : ItemTouchHelper.Callback() {
 
-            private val limitScrollX = dipToPx(100f, this@MainActivity)
+            private val limitScrollX = dipToPx(100f, this@UserlistActivity)
             var currentScrollX = 0
             var currentScrollXWhenInActive = 0
             var initXWhenInActive = 0f
@@ -170,12 +164,10 @@ class MainActivity : AppCompatActivity() {
                 isCurrentlyActive: Boolean
             ) {
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-
                     if (dX == 0f) {
                         currentScrollX = viewHolder.itemView.scrollX
                         firstInActive = true
                     }
-
                     if (isCurrentlyActive) {
                         var scrollOffset = currentScrollX + (-dX).toInt()
                         if (scrollOffset > limitScrollX) {
@@ -183,17 +175,13 @@ class MainActivity : AppCompatActivity() {
                         } else if (scrollOffset < 0) {
                             scrollOffset = 0
                         }
-
                         viewHolder.itemView.scrollTo(scrollOffset, 0)
-
-
                     } else {
                         if (firstInActive) {
                             firstInActive = false
                             currentScrollXWhenInActive = viewHolder.itemView.scrollX
                             initXWhenInActive = dX
                         }
-
                         if (viewHolder.itemView.scrollX < limitScrollX) {
                             viewHolder.itemView.scrollTo(
                                 (currentScrollXWhenInActive * dX / initXWhenInActive).toInt(),
@@ -217,12 +205,11 @@ class MainActivity : AppCompatActivity() {
             }
 
         }).apply {
-            attachToRecyclerView(recyclerView)
+            attachToRecyclerView(userRecyclerView)
         }
     }
 
     fun dipToPx(dipValue: Float, context: Context): Int {
         return (dipValue * context.resources.displayMetrics.density).toInt()
     }
-
 }

@@ -1,93 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="150dp"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools">-->
-
-<!--    <LinearLayout-->
-<!--        android:id="@+id/frameLayoutConstraint"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="150dp"-->
-<!--        android:orientation="vertical"-->
-<!--        android:padding="16dp"-->
-<!--        >-->
-
-
-<!--        <TextView-->
-<!--            android:id="@+id/tvName"-->
-<!--            android:textSize="16sp"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            tools:text="Name"-->
-<!--            />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tvId"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            tools:text="Id"-->
-
-<!--            />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tvEmail"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            tools:text="Email"-->
-<!--            />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tvRegDate"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            tools:text="RegDate"-->
-<!--            />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tvLastLogin"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            tools:text="Last Login"-->
-<!--            />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tvStatus"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            tools:text="Status"-->
-<!--            />-->
-
-
-<!--    </LinearLayout>-->
-
-<!--    <TextView-->
-<!--        android:layout_width="100dp"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:layout_constraintStart_toEndOf="@+id/frameLayoutConstraint"-->
-<!--        android:text="delete"-->
-<!--        android:textSize="12pt"-->
-<!--        android:textColor="#fff"-->
-<!--        android:id="@+id/textViewDelete"-->
-<!--        android:background="#f00"/>-->
-
-<!--    <TextView-->
-<!--        android:layout_width="100dp"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:layout_constraintStart_toEndOf="@+id/textViewDelete"-->
-<!--        android:text="block"-->
-<!--        android:textSize="12pt"-->
-<!--        android:textColor="#fff"-->
-<!--        android:id="@+id/textViewBlock"-->
-<!--        android:background="#f00"/>-->
-
-<!--    <View-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0.8dp"-->
-<!--        android:background="#ddd"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"/>-->
-
-
-<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+<?xml version="1.0" encoding="utf-8"?>
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -97,17 +8,14 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
-    android:paddingBottom="3dp"
-    >
+    android:paddingBottom="3dp">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="144dp"
-        android:padding="10dp"
+        android:layout_height="174dp"
         android:layout_marginBottom="5dp"
-        >
-
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/tvName"
@@ -118,14 +26,13 @@
             android:text="Name"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/black"
-            android:textSize="25sp" />
-
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tvStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvRegDate"
+            android:layout_below="@+id/tvName"
             android:layout_alignParentStart="true"
             android:layout_marginTop="5dp"
             android:text="Status"
@@ -136,7 +43,7 @@
             android:id="@+id/tvId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvName"
+            android:layout_below="@+id/tvStatus"
             android:layout_marginTop="5dp"
             android:text="id"
             android:textSize="12sp" />
@@ -145,7 +52,7 @@
             android:id="@+id/tvLastLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvId"
+            android:layout_below="@+id/tvRegDate"
             android:layout_alignParentStart="true"
             android:layout_marginTop="5dp"
             android:text="Last login"
@@ -155,9 +62,7 @@
             android:id="@+id/tvEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvName"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="150dp"
+            android:layout_below="@+id/tvId"
             android:layout_marginTop="5dp"
             android:text="Email"
             android:textSize="12sp" />
@@ -166,43 +71,54 @@
             android:id="@+id/tvRegDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvLastLogin"
+            android:layout_below="@+id/tvEmail"
             android:layout_alignParentStart="true"
             android:layout_marginTop="5dp"
             android:text="Registration Date"
             android:textSize="12sp" />
-
 
     </RelativeLayout>
 
     <TextView
         android:id="@+id/textViewBlock"
         android:layout_width="100dp"
-        android:layout_height="72dp"
-        android:background="#FF5722"
-        android:text="BLOCK"
+        android:layout_height="87dp"
+        android:background="#FF7043"
         android:gravity="center"
+        android:text="Block"
         android:textColor="#fff"
         android:textSize="12pt"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDelete"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout" />
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDelete" />
+
+    <TextView
+        android:id="@+id/textViewUnblock"
+        android:layout_width="100dp"
+        android:layout_height="87dp"
+        android:background="#00C853"
+        android:gravity="center"
+        android:text="Unblock"
+        android:textColor="#fff"
+        android:textSize="12pt"
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDelete" />
 
     <TextView
         android:id="@+id/textViewDelete"
         android:layout_width="100dp"
-        android:layout_height="72dp"
+        android:layout_height="87dp"
         android:background="#C21826"
         android:gravity="center"
-        android:text="DELETE"
+        android:text="Delete"
         android:textColor="#fff"
         android:textSize="12pt"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout" />
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.8dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+
