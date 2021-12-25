@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--CardView-->
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/constraintLayout"
@@ -10,17 +8,14 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
-    android:paddingBottom="3dp"
-    >
+    android:paddingBottom="3dp">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="174dp"
-        android:padding="10dp"
         android:layout_marginBottom="5dp"
-        >
-
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/tvName"
@@ -32,7 +27,6 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/black"
             android:textSize="30sp" />
-
 
         <TextView
             android:id="@+id/tvStatus"
@@ -83,7 +77,6 @@
             android:text="Registration Date"
             android:textSize="12sp" />
 
-
     </RelativeLayout>
 
     <TextView
@@ -91,24 +84,24 @@
         android:layout_width="100dp"
         android:layout_height="87dp"
         android:background="#FF7043"
-        android:text="Block"
         android:gravity="center"
+        android:text="Block"
         android:textColor="#fff"
         android:textSize="12pt"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDelete"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout" />
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDelete" />
 
     <TextView
         android:id="@+id/textViewUnblock"
         android:layout_width="100dp"
         android:layout_height="87dp"
         android:background="#00C853"
-        android:text="Unblock"
         android:gravity="center"
+        android:text="Unblock"
         android:textColor="#fff"
         android:textSize="12pt"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDelete"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout" />
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDelete" />
 
     <TextView
         android:id="@+id/textViewDelete"
@@ -119,14 +112,13 @@
         android:text="Delete"
         android:textColor="#fff"
         android:textSize="12pt"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout" />
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.8dp"
         app:layout_constraintBottom_toBottomOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
