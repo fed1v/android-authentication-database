@@ -180,7 +180,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun switchActivity() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, UserlistActivity::class.java)
         startActivity(intent)
         finish()
     }

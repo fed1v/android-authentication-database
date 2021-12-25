@@ -34,7 +34,14 @@ class UserFirebaseAdapter : RecyclerView.Adapter<UserViewHolder>() {
         holder.bindView(user)
 
         holder.textViewDelete.setOnClickListener {
+            println("Delete UserFirebaseAdapter")
+
+            // Add here a method to delete user
+
             onClickDeleteItem?.invoke(user)
+            println("After onClickBlockItem invoke(user)")
+
+
             notifyItemRemoved(position)
         }
 
@@ -45,7 +52,12 @@ class UserFirebaseAdapter : RecyclerView.Adapter<UserViewHolder>() {
                 user.status = true
             }
 
+            // Add here a method to block user
+
+            println("Block UserFirebaseAdapter")
             onClickBlockItem?.invoke(user)
+            println("After onClickBlockItem invoke(user)")
+
             notifyItemChanged(position)
         }
 

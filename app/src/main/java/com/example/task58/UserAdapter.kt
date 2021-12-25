@@ -34,7 +34,10 @@ class UserAdapter : RecyclerView.Adapter<ItemViewHolder>() {
         holder.bindView(user)
 
         holder.textViewDelete.setOnClickListener {
+            println("Delete in Adapter")
+
             onClickDeleteItem?.invoke(user)
+            println("After onClickDeleteItem invoke(user)")
             notifyItemRemoved(position)
         }
 
@@ -45,7 +48,11 @@ class UserAdapter : RecyclerView.Adapter<ItemViewHolder>() {
                 user.status = true
             }
 
+            println("Block in Adapter")
+
             onClickBlockItem?.invoke(user)
+            println("After onClickBlockItem invoke(user)")
+
             notifyItemChanged(position)
         }
 

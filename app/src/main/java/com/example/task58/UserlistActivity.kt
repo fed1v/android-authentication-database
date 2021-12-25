@@ -14,19 +14,44 @@ class UserlistActivity : AppCompatActivity() {
     private lateinit var db: DatabaseReference
     private lateinit var userRecyclerView: RecyclerView
     private lateinit var userArrayList: ArrayList<User>
+    private var adapter: UserFirebaseAdapter? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_userlist)
 
-        userRecyclerView = findViewById(R.id.userList)
-        userRecyclerView.layoutManager = LinearLayoutManager(this)
-        userRecyclerView.setHasFixedSize(true)
+        initView()
+        initRecyclerView()
 
         userArrayList = arrayListOf<User>()
 
+
+
         getUserData()
+
+        adapter!!.setOnClickDeleteItem {
+            println("Delete...(In UserlistActivity)")
+            getUserData()
+        }
+
+        adapter!!.setOnClickBlockItem {
+            println("Block...(In UserlistActivity)")
+            getUserData()
+        }
+
         setItemTouchHelper()
+    }
+
+    private fun initRecyclerView(){
+        userRecyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = UserFirebaseAdapter()
+        userRecyclerView.adapter = adapter
+    }
+
+    private fun initView(){
+        userRecyclerView = findViewById(R.id.userList)
+        userRecyclerView.setHasFixedSize(true)
     }
 
     private fun getUserData() {
@@ -34,15 +59,14 @@ class UserlistActivity : AppCompatActivity() {
         db.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
-                    userArrayList.removeAll{true} // ???
+                    userArrayList.removeAll{true}
                     for(userSnapshot in snapshot.children){
                         val user = userSnapshot.getValue(User::class.java)
                         userArrayList.add(user!!)
                     }
 
-                    val userFirebaseAdapter = UserFirebaseAdapter()
-                    userFirebaseAdapter.userList = userArrayList
-                    userRecyclerView.adapter = userFirebaseAdapter
+                    adapter?.addItems((userArrayList))
+                //    userRecyclerView.adapter = adapter
                 }
 
             }

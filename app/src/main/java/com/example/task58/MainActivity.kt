@@ -50,11 +50,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         adapter?.setOnClickDeleteItem {
+            println("Delete in Main")
             deleteUser(it.id)
             getUsers()
         }
 
         adapter?.setOnClickBlockItem {
+            println("Block in Main")
             updateUser(it)
             getUsers()
         }

@@ -91,12 +91,12 @@ class DataBaseHelper(context: Context) :
         val contentValues = ContentValues()
         contentValues.put(COL_ID, id)
 
-        val success = db.delete(TABLE_NAME, "id="+id, null)
+        val success = db.delete(TABLE_NAME, "id=" + id, null)
         db.close()
         return success
     }
 
-    fun updateUser(user: User): Int{
+    fun updateUser(user: User): Int {
         val db = this.writableDatabase
         val values = ContentValues()
 
@@ -107,9 +107,8 @@ class DataBaseHelper(context: Context) :
         values.put(COL_LAST_LOGIN, user.lastLogin)
         values.put(COL_STATUS, user.status)
 
-        val success = db.update(TABLE_NAME, values, "id="+user.id, null)
+        val success = db.update(TABLE_NAME, values, "id=" + user.id, null)
         db.close()
         return success
     }
-
 }
