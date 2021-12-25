@@ -11,6 +11,7 @@ class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     lateinit var textView: TextView
     var textViewDelete = itemView.findViewById<TextView>(R.id.textViewDelete)
     var textViewBlock = itemView.findViewById<TextView>(R.id.textViewBlock)
+    var textViewUnblock = itemView.findViewById<TextView>(R.id.textViewUnblock)
 
     private var id = itemView.findViewById<TextView>(R.id.tvId)
     private var name = itemView.findViewById<TextView>(R.id.tvName)
@@ -22,6 +23,7 @@ class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     var index = 0
     var onDeleteClick: ((RecyclerView.ViewHolder) -> Unit)? = null
     var onBlockClick: ((RecyclerView.ViewHolder) -> Unit)? = null
+    var onUnblockClick: ((RecyclerView.ViewHolder) -> Unit)? = null
 
     init {
         view.get()?.let {
@@ -46,6 +48,15 @@ class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             true -> "Blocked"
             else -> "Not Blocked"
         }
+
+        if(user.status == true){
+            textViewBlock.visibility = View.GONE
+            textViewUnblock.visibility = View.VISIBLE
+        } else{
+            textViewBlock.visibility = View.VISIBLE
+            textViewUnblock.visibility = View.GONE
+        }
+
     }
 
     fun updateView() {

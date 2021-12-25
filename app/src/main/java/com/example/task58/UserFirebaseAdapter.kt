@@ -49,6 +49,17 @@ class UserFirebaseAdapter : RecyclerView.Adapter<UserViewHolder>() {
             notifyItemChanged(position)
         }
 
+        holder.textViewUnblock.setOnClickListener {
+            if(user.status == true){
+                user.status = false
+            } else {
+                user.status = true        ///// ??????
+            }
+
+            onClickBlockItem?.invoke(user)
+            notifyItemChanged(position)
+        }
+
         holder.updateView()
     }
 
