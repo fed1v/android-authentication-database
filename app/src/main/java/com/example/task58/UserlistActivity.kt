@@ -78,14 +78,12 @@ class UserlistActivity : AppCompatActivity() {
             db.child(id).updateChildren(newUser).addOnSuccessListener {
                 if (newStatus) {
                     Toast.makeText(this, "User blocked", Toast.LENGTH_SHORT).show()
-                    if(id == LoginActivity.currentUserId){
-                        println("Logout in block")
+                    if (id == LoginActivity.currentUserId) {
                         logOut()
                     }
                 } else {
                     Toast.makeText(this, "User unblocked", Toast.LENGTH_SHORT).show()
                 }
-
             }.addOnFailureListener {
                 Toast.makeText(this, "Fail", Toast.LENGTH_SHORT).show()
                 return@addOnFailureListener
@@ -96,8 +94,7 @@ class UserlistActivity : AppCompatActivity() {
     private fun deleteUser(id: String) {
         db.child(id).removeValue().addOnSuccessListener {
             Toast.makeText(this, "User deleted", Toast.LENGTH_SHORT).show()
-            if(id == LoginActivity.currentUserId){
-                println("Logout in delete")
+            if (id == LoginActivity.currentUserId) {
                 logOut()
             }
         }.addOnFailureListener {
@@ -128,11 +125,9 @@ class UserlistActivity : AppCompatActivity() {
                         val user = userSnapshot.getValue(User::class.java)
                         userArrayList.add(user!!)
                     }
-
                     adapter?.addItems((userArrayList))
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {}
         })
     }
@@ -183,12 +178,10 @@ class UserlistActivity : AppCompatActivity() {
                 isCurrentlyActive: Boolean
             ) {
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-
                     if (dX == 0f) {
                         currentScrollX = viewHolder.itemView.scrollX
                         firstInActive = true
                     }
-
                     if (isCurrentlyActive) {
                         var scrollOffset = currentScrollX + (-dX).toInt()
                         if (scrollOffset > limitScrollX) {
@@ -196,17 +189,13 @@ class UserlistActivity : AppCompatActivity() {
                         } else if (scrollOffset < 0) {
                             scrollOffset = 0
                         }
-
                         viewHolder.itemView.scrollTo(scrollOffset, 0)
-
-
                     } else {
                         if (firstInActive) {
                             firstInActive = false
                             currentScrollXWhenInActive = viewHolder.itemView.scrollX
                             initXWhenInActive = dX
                         }
-
                         if (viewHolder.itemView.scrollX < limitScrollX) {
                             viewHolder.itemView.scrollTo(
                                 (currentScrollXWhenInActive * dX / initXWhenInActive).toInt(),

@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.rengwuxian.materialedittext.MaterialEditText
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.properties.Delegates
 
 class LoginActivity : AppCompatActivity() {
     lateinit var btnSignIn: Button
@@ -27,9 +28,10 @@ class LoginActivity : AppCompatActivity() {
 
     lateinit var auth: FirebaseAuth
     lateinit var db: FirebaseDatabase
+    lateinit var database: DatabaseReference
     lateinit var users: DatabaseReference
 
-    companion object{
+    companion object {
         lateinit var currentUserId: String
     }
 
@@ -42,7 +44,6 @@ class LoginActivity : AppCompatActivity() {
 
         btnRegister.setOnClickListener { showRegisterWindow() }
         btnSignIn.setOnClickListener { showSignInWindow() }
-
     }
 
     private fun showSignInWindow() {
@@ -116,12 +117,9 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     registerUser(email, name, password)
-
                 }
-
             })
         dialog.show()
-
     }
 
     private fun registerUser(
@@ -158,8 +156,6 @@ class LoginActivity : AppCompatActivity() {
         }.addOnFailureListener {
             Snackbar.make(root, "Error." + it.message, Snackbar.LENGTH_SHORT).show()
         }
-
-
     }
 
     private fun logIn(
@@ -171,19 +167,32 @@ class LoginActivity : AppCompatActivity() {
             pass += "00000"
         }
 
-        // need to add block TODO
-
         auth.signInWithEmailAndPassword(email.text.toString(), pass)
             .addOnSuccessListener {
-                Snackbar.make(root, "Successful", Snackbar.LENGTH_SHORT).show()
-                println("Current user: ${auth.currentUser!!.uid}")
                 currentUserId = auth.currentUser!!.uid
-                switchActivity()
+
+                database.child(currentUserId).get().addOnSuccessListener {
+                    val status = it.child("status").value.toString().toBoolean()
+
+                    if (status) {
+                        Snackbar.make(root, "This user is blocked", Snackbar.LENGTH_SHORT).show()
+                        return@addOnSuccessListener
+                    } else {
+                        val lastLogin = getCurrentDateTime().toString("yyyy/MM/dd HH:mm:ss")
+                        val newUser = mapOf(
+                            "lastLogin" to lastLogin
+                        )
+
+                        database.child(currentUserId).updateChildren(newUser)
+                        switchActivity()
+                    }
+                }
             }.addOnFailureListener {
                 Snackbar.make(root, "Authorisation error. " + it.message, Snackbar.LENGTH_SHORT)
                     .show()
             }
     }
+
 
     private fun switchActivity() {
         val intent = Intent(this, UserlistActivity::class.java)
@@ -198,6 +207,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initData() {
+        database = FirebaseDatabase.getInstance().getReference("Users")
         auth = FirebaseAuth.getInstance()
         db = FirebaseDatabase.getInstance()
         users = db.getReference("Users")
