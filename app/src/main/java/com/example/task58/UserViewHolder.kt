@@ -20,11 +20,6 @@ class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private var lastLogin = itemView.findViewById<TextView>(R.id.tvLastLogin)
     private var status = itemView.findViewById<TextView>(R.id.tvStatus)
 
-    var index = 0
-    var onDeleteClick: ((RecyclerView.ViewHolder) -> Unit)? = null
-    var onBlockClick: ((RecyclerView.ViewHolder) -> Unit)? = null
-    var onUnblockClick: ((RecyclerView.ViewHolder) -> Unit)? = null
-
     init {
         view.get()?.let {
             it.setOnClickListener {

@@ -42,7 +42,6 @@ class UserlistActivity : AppCompatActivity() {
         setItemTouchHelper()
     }
 
-
     private fun logOut() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
@@ -51,12 +50,6 @@ class UserlistActivity : AppCompatActivity() {
 
     private fun updateUserStatus(id: String) {
         db.child(id).get().addOnSuccessListener {
-            val uid = it.child("id").value.toString()
-            val name = it.child("name").value.toString()
-            val email = it.child("email").value.toString()
-            val registrationDate = it.child("registrationDate").value.toString()
-            val lastLogin = it.child("lastLogin").value.toString()
-            val password = it.child("password").value.toString()
             val status = it.child("status").value.toString()
 
             val newStatus = when (status) {
